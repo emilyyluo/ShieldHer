@@ -1,43 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 
-class PhoneCall extends StatefulWidget {
-  @override
-  _PhoneCallState createState() => _PhoneCallState();
-}
-
-// class PhoneCall extends StatelessWidget {
-class _PhoneCallState extends State<PhoneCall> {
-  final AudioPlayer audioPlayer = AudioPlayer();
-
-  @override
-  void initState() {
-    super.initState();
-    // Play the audio file when the screen initially opens
-    playAudio();
-    // call();
-  }
-
-  Future<void> playAudio() async {
-    await audioPlayer.play(
-        'assets/audio/testingAudio.m4a'); // Replace with your audio file path
-  }
-
-  
-
+class PhoneCall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 82, 72, 60),
       ),
-      body: Center(child: PhoneCall()),
+      body: Center(child: PhoneScreen()),
     );
   }
+}
 
-  // class PhoneScreen extends StatelessWidget {
-  // @override
-  Widget call(BuildContext context) {
+class PhoneScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -86,6 +63,3 @@ class _PhoneCallState extends State<PhoneCall> {
     );
   }
 }
-
-
-

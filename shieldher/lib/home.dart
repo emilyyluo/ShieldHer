@@ -33,9 +33,12 @@ class HomePage extends StatelessWidget {
               icon: Icon(Icons.settings),
             ),
           ],
-          indicatorColor: Color.fromARGB(255, 87, 61, 43),
+          indicatorColor: Color.fromARGB(0, 87, 61, 43),
           unselectedLabelColor: Color.fromARGB(255, 232, 217, 193),
+          labelColor: Color.fromARGB(255, 87, 61, 43),
+          
         ),
+        
         backgroundColor: Color.fromARGB(255, 203, 133, 137),
       ),
     );

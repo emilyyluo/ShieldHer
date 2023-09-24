@@ -40,7 +40,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 350,
                     child: TextField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                         hintText: 'Enter a username',
                       ),
                     ),
@@ -57,7 +59,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 350,
                     child: TextField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                         hintText: 'Enter first name',
                       ),
                     ),
@@ -74,7 +78,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 350,
                     child: TextField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                         hintText: 'Enter last name',
                       ),
                     ),
@@ -91,7 +97,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 350,
                     child: TextField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                         hintText: 'Enter email',
                       ),
                     ),
@@ -108,7 +116,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 350,
                     child: TextField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                         hintText: 'Enter a password',
                       ),
                     ),
@@ -125,7 +135,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 350,
                     child: TextField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                         hintText: 'Enter number',
                       ),
                     ),
@@ -158,6 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
         bottomNavigationBar: TabBar(
-          tabs: [
+          tabs: const [
             Tab(
               icon: Icon(Icons.person),
             ),
@@ -28,8 +28,10 @@ class _LoginScreenState extends State<LoginScreen> {
               icon: Icon(Icons.add_circle_outline),
             ),
           ],
-          indicatorColor: Color.fromARGB(255, 232, 217, 193),
+          indicatorColor: Color.fromARGB(0, 87, 61, 43),
           unselectedLabelColor: Color.fromARGB(255, 232, 217, 193),
+          labelColor: Color.fromARGB(255, 87, 61, 43),
+
         ),
         backgroundColor: Color.fromARGB(255, 203, 133, 137),
       ),
@@ -67,7 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 350,
                   child: TextField(
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                       hintText: 'Enter a username',
                     ),
                   ),
@@ -76,15 +80,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   'Password',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Color.fromARGB(255, 87, 61, 43),
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 87, 61, 43),
                   ),
                 ),
                 SizedBox(
                   width: 350,
                   child: TextField(
+                    obscureText: true,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                       hintText: 'Enter a password',
                     ),
                   ),

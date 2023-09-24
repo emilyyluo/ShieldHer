@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-class PhoneCall extends StatelessWidget { 
-  @override 
-  Widget build(BuildContext context) {
-    return Scaffold (
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 82, 72, 60),
-      ),
-      body: Center ( 
-        child: PhoneScreen ()
-      ),
-    ); 
-  }
-}
-
-
-
-class PhoneScreen extends StatelessWidget {
+class PhoneCall extends StatelessWidget {
   final AudioPlayer audioPlayer = AudioPlayer();
 
   Future<void> playAudio() async {
-    await audioPlayer.play('assets/audio/testingAudio.m4a'); // Replace with your audio file path
-    print("should have played");
+    await audioPlayer.play('assets/audio/testingAudio.m4a');
   }
 
   @override
@@ -40,16 +23,49 @@ class PhoneScreen extends StatelessWidget {
         Positioned (
           bottom: 10, 
           right: 16, 
-          child: ElevatedButton ( 
-            onPressed: () async { 
-              await playAudio();
-              print('shouldhaveplayedJFAKDJFHDKJHFDJBFDF');
-            },
-            child: Text("Send Location"),
-            style: ButtonStyle ( 
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.red.withOpacity(0.7)),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-            )
+          child: Column(
+            children: [
+              ElevatedButton ( 
+                onPressed: () { 
+                  showDialog(
+                context: context,
+                builder: (BuildContext context) { 
+                  return AlertDialog(
+                    title: Text("Location Sent"),
+                    content: Text("Your location has been sent to your emergency contacts"),
+                    actions: [
+                      TextButton(
+                        child: Text("Close", 
+                          style: TextStyle (
+                              color: Colors.black, 
+                            )),
+                        onPressed: () { 
+                          Navigator.of(context).pop(); 
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+                },
+                child: Text("Send Location"),
+                style: ButtonStyle ( 
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red.withOpacity(0.7)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                )
+              ),
+              SizedBox(height: 16), // Add some space between the buttons
+              ElevatedButton(
+                onPressed: () async {
+                  await playAudio(); // Play audio when this button is clicked
+                },
+                child: Text("Play Audio"),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue.withOpacity(0.7)),
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                ),
+              ),
+            ],
           ),
         ),
       ],

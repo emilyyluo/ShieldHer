@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class PhoneCall extends StatelessWidget { 
   @override 
@@ -14,7 +15,16 @@ class PhoneCall extends StatelessWidget {
   }
 }
 
+
+
 class PhoneScreen extends StatelessWidget {
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  Future<void> playAudio() async {
+    await audioPlayer.play('assets/audio/testingAudio.m4a'); // Replace with your audio file path
+    print("should have played");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -31,27 +41,9 @@ class PhoneScreen extends StatelessWidget {
           bottom: 10, 
           right: 16, 
           child: ElevatedButton ( 
-            onPressed: () { 
-              showDialog(
-                context: context,
-                builder: (BuildContext context) { 
-                  return AlertDialog(
-                    title: Text("Location Sent"),
-                    content: Text("Your location has been sent to your emergency contacts"),
-                    actions: [
-                      TextButton(
-                        child: Text("Close", 
-                          style: TextStyle (
-                              color: Colors.black, 
-                            )),
-                        onPressed: () { 
-                          Navigator.of(context).pop(); 
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
+            onPressed: () async { 
+              await playAudio();
+              print('shouldhaveplayedJFAKDJFHDKJHFDJBFDF');
             },
             child: Text("Send Location"),
             style: ButtonStyle ( 

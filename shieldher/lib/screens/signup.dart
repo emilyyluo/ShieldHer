@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:shieldher/screens/login.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -6,6 +10,79 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
+  Future<void> registerUser() async {
+    var url = Uri.parse(
+        'http://localhost:8080/register'); // Replace with your backend API URL
+
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json', // Add this line
+      },
+      body: jsonEncode({
+        'userName': usernameController.text,
+        'firstName': firstNameController.text,
+        'lastName': lastNameController.text,
+        'email': emailController.text,
+        'password': passwordController.text,
+        'phone': phoneController.text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Signup Successful');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Success'),
+            content: Text('Signup Successful'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LoginScreen()), // Replace with your login page widget
+                  );
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      print('Error: ${response.reasonPhrase}');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Error: ${response.reasonPhrase}'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -39,6 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: 350,
                     child: TextField(
+                      controller: usernameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
@@ -58,6 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: 350,
                     child: TextField(
+                      controller: firstNameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
@@ -77,6 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: 350,
                     child: TextField(
+                      controller: lastNameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
@@ -96,6 +176,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: 350,
                     child: TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
@@ -115,6 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: 350,
                     child: TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
@@ -134,6 +216,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: 350,
                     child: TextField(
+                      controller: phoneController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
@@ -157,7 +240,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     onPressed: () async {
+                      await registerUser();
                       print("going to validate login info");
+
                       //go to home after signup if authenticated
                       //pop up box disclaimer for phone call page --> how to exit
                     },

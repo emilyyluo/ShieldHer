@@ -1,13 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:shieldher/screens/signup.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:shieldher/home.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  Future<bool> loginUser() async {
+    var url = Uri.parse(
+        'http://localhost:8080/login'); // Replace with your login API URL
+
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'userName': usernameController.text,
+        'password': passwordController.text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Login Successful');
+      print('Signup Successful');
+
+      return true;
+      // You can navigate to another screen or perform other actions here
+    } else {
+      print('${response.reasonPhrase}');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Invalid UserName and Password'),
+            content: Text('Error: ${response.reasonPhrase}'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    // Handle login error, display a message to the user, etc.
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -68,6 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: 350,
                   child: TextField(
+                    controller: usernameController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
@@ -87,6 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: 350,
                   child: TextField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -112,11 +163,40 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   onPressed: () async {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(),
-                      ),
-                    ); 
+                    // await loginUser();
+                    bool loginSuccess = await loginUser();
+                    if (loginSuccess) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Success'),
+                            content: Text('Welcome to ShieldHer'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HomePage()), // Replace with your login page widget
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => HomePage(),
+                      //   ),
+                      // );
+                    } else {
+                      print("Wrong ID Password");
+                    }
                   },
                   child: Text(
                     'LOGIN',
@@ -126,7 +206,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  
                 ),
               ],
             ),
